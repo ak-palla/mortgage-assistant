@@ -1,0 +1,42 @@
+2025-12-11T09:56:53.709500573Z [inf]  
+2025-12-11T09:56:56.161439732Z [inf]  [35m[Region: asia-southeast1][0m
+2025-12-11T09:56:56.175793595Z [inf]  [35m=========================
+2025-12-11T09:56:56.175820883Z [inf]  Using Detected Dockerfile
+2025-12-11T09:56:56.175826287Z [inf]  =========================
+2025-12-11T09:56:56.175833697Z [inf]  [0m
+2025-12-11T09:56:56.175848291Z [inf]  context: 5bdn-U5qH
+2025-12-11T09:56:56.375972776Z [inf]  [internal] load build definition from Dockerfile
+2025-12-11T09:56:56.376024608Z [inf]  [internal] load build definition from Dockerfile
+2025-12-11T09:56:56.376040776Z [inf]  [internal] load build definition from Dockerfile
+2025-12-11T09:56:56.389273742Z [inf]  [internal] load build definition from Dockerfile
+2025-12-11T09:56:56.391473287Z [inf]  [internal] load metadata for docker.io/library/python:3.11-slim
+2025-12-11T09:56:57.203415911Z [inf]  [internal] load metadata for docker.io/library/python:3.11-slim
+2025-12-11T09:56:57.203483049Z [inf]  [internal] load .dockerignore
+2025-12-11T09:56:57.203503851Z [inf]  [internal] load .dockerignore
+2025-12-11T09:56:57.203520326Z [inf]  [internal] load .dockerignore
+2025-12-11T09:56:57.216210293Z [inf]  [internal] load .dockerignore
+2025-12-11T09:56:57.220182659Z [inf]  [6/6] RUN touch /app/leads.json
+2025-12-11T09:56:57.220217118Z [inf]  [5/6] COPY ./app /app/app
+2025-12-11T09:56:57.220230321Z [inf]  [4/6] RUN pip install --no-cache-dir -r requirements.txt
+2025-12-11T09:56:57.220239538Z [inf]  [3/6] COPY requirements.txt .
+2025-12-11T09:56:57.220249920Z [inf]  [internal] load build context
+2025-12-11T09:56:57.220258125Z [inf]  [2/6] WORKDIR /app
+2025-12-11T09:56:57.220267873Z [inf]  [1/6] FROM docker.io/library/python:3.11-slim@sha256:7cd0079a9bd8800c81632d65251048fc2848bf9afda542224b1b10e0cae45575
+2025-12-11T09:56:57.220286658Z [inf]  [1/6] FROM docker.io/library/python:3.11-slim@sha256:7cd0079a9bd8800c81632d65251048fc2848bf9afda542224b1b10e0cae45575
+2025-12-11T09:56:57.220294698Z [inf]  [internal] load build context
+2025-12-11T09:56:57.227572241Z [inf]  [1/6] FROM docker.io/library/python:3.11-slim@sha256:7cd0079a9bd8800c81632d65251048fc2848bf9afda542224b1b10e0cae45575
+2025-12-11T09:56:57.227816030Z [inf]  [internal] load build context
+2025-12-11T09:56:57.239173715Z [inf]  [internal] load build context
+2025-12-11T09:56:57.240722105Z [inf]  [2/6] WORKDIR /app
+2025-12-11T09:56:57.240755412Z [err]  [3/6] COPY requirements.txt .
+2025-12-11T09:56:57.240782080Z [inf]  [4/6] RUN pip install --no-cache-dir -r requirements.txt
+2025-12-11T09:56:57.240797417Z [err]  [5/6] COPY ./app /app/app
+2025-12-11T09:56:57.259089287Z [err]  Dockerfile:6
+2025-12-11T09:56:57.259131699Z [err]  -------------------
+2025-12-11T09:56:57.259142135Z [err]  4 |
+2025-12-11T09:56:57.259148346Z [err]  5 |     # Copy requirements first for better caching
+2025-12-11T09:56:57.259155668Z [err]  6 | >>> COPY requirements.txt .
+2025-12-11T09:56:57.259159951Z [err]  7 |     RUN pip install --no-cache-dir -r requirements.txt
+2025-12-11T09:56:57.259164201Z [err]  8 |
+2025-12-11T09:56:57.259169009Z [err]  -------------------
+2025-12-11T09:56:57.259174404Z [err]  ERROR: failed to build: failed to solve: failed to compute cache key: failed to calculate checksum of ref xf6qme8q702lsfvi5mab5vzo2::j43mbq4zkt5ky68m9wa38myhd: "/requirements.txt": not found
