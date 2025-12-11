@@ -2,21 +2,27 @@
 
 :root {
   /* Premium Fintech Theme */
-  --background: #F8FAFC; /* Slate 50 */
-  --foreground: #0F172A; /* Slate 900 */
-  
-  --primary: #4F46E5; /* Indigo 600 */
-  --primary-foreground: #FFFFFF;
-  
-  --secondary: #FFFFFF;
-  --secondary-foreground: #1E293B; /* Slate 800 */
-  
-  --accent: #E0E7FF; /* Indigo 100 */
-  --accent-foreground: #4338CA; /* Indigo 700 */
+  --background: #F8FAFC;
+  /* Slate 50 */
+  --foreground: #0F172A;
+  /* Slate 900 */
 
-  --chat-user-bg: #4F46E5; /* Indigo 600 */
+  --primary: #9CBB2F;
+  /* Brand Lime */
+  --primary-foreground: #FFFFFF;
+
+  --secondary: #FFFFFF;
+  --secondary-foreground: #1E293B;
+  /* Slate 800 */
+
+  --accent: #F4F8EC;
+  /* Lime 50/100ish */
+  --accent-foreground: #3F4D13;
+  /* Dark Lime */
+
+  --chat-user-bg: #9CBB2F;
   --chat-user-text: #FFFFFF;
-  
+
   --chat-agent-bg: #FFFFFF;
   --chat-agent-text: #1E293B;
 }
@@ -30,7 +36,7 @@
   --color-secondary-foreground: var(--secondary-foreground);
   --color-accent: var(--accent);
   --color-accent-foreground: var(--accent-foreground);
-  
+
   --color-chat-user-bg: var(--chat-user-bg);
   --color-chat-user-text: var(--chat-user-text);
   --color-chat-agent-bg: var(--chat-agent-bg);
@@ -38,27 +44,33 @@
 
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
-  
+
   --shadow-glass: 0 8px 32px 0 rgba(31, 38, 135, 0.07);
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0F172A; /* Slate 900 */
-    --foreground: #F8FAFC; /* Slate 50 */
-    
-    --primary: #6366F1; /* Indigo 500 */
-    --primary-foreground: #FFFFFF;
-    
-    --secondary: #1E293B; /* Slate 800 */
-    --secondary-foreground: #F8FAFC;
-    
-    --accent: #1E293B; /* Slate 800 */
-    --accent-foreground: #E0E7FF; /* Indigo 100 */
+    --background: #0F172A;
+    /* Slate 900 */
+    --foreground: #F8FAFC;
+    /* Slate 50 */
 
-    --chat-user-bg: #6366F1;
+    --primary: #9CBB2F;
+    /* Brand Lime */
+    --primary-foreground: #FFFFFF;
+
+    --secondary: #1E293B;
+    /* Slate 800 */
+    --secondary-foreground: #F8FAFC;
+
+    --accent: #1E293B;
+    /* Slate 800 */
+    --accent-foreground: #9CBB2F;
+    /* Brand Lime */
+
+    --chat-user-bg: #9CBB2F;
     --chat-user-text: #FFFFFF;
-    
+
     --chat-agent-bg: #1E293B;
     --chat-agent-text: #F1F5F9;
   }
@@ -91,16 +103,20 @@ body {
   width: 6px;
   height: 6px;
 }
+
 ::-webkit-scrollbar-track {
   background: transparent;
 }
+
 ::-webkit-scrollbar-thumb {
   background: #CBD5E1;
   border-radius: 3px;
 }
+
 .dark ::-webkit-scrollbar-thumb {
   background: #475569;
 }
+
 ::-webkit-scrollbar-thumb:hover {
   background: #94A3B8;
 }
