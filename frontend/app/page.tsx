@@ -55,23 +55,25 @@ export default function Home() {
       </div>
 
       {/* Header */}
-      <header className="fixed top-6 left-0 right-0 z-20 flex justify-center px-4">
-        <div className="glass-panel w-full max-w-4xl rounded-full border border-white/20 px-6 py-3 flex items-center justify-between shadow-2xl bg-white/60 dark:bg-slate-900/60 backdrop-blur-xl">
-          <div className="flex items-center gap-3">
-            <Image
-              src="/logo.png"
-              alt="Logo"
-              width={32}
-              height={32}
-              className="w-8 h-8 object-contain drop-shadow-md"
-            />
-            <div>
-              <h1 className="text-base font-bold text-foreground leading-tight">UAE Mortgage Assistant</h1>
+      <header className="fixed top-6 left-0 right-0 z-20 flex justify-center">
+        <div className="w-full max-w-5xl px-2 sm:px-4">
+          <div className="glass-panel w-full rounded-full border border-white/20 px-6 py-3 flex items-center justify-between shadow-2xl bg-white/60 dark:bg-slate-900/60 backdrop-blur-xl">
+            <div className="flex items-center gap-3">
+              <Image
+                src="/logo.png"
+                alt="Logo"
+                width={32}
+                height={32}
+                className="w-8 h-8 object-contain drop-shadow-md"
+              />
+              <div>
+                <h1 className="text-base font-bold text-foreground leading-tight">UAE Mortgage Assistant</h1>
+              </div>
             </div>
+            <p className="hidden sm:block text-xs text-muted-foreground font-medium bg-secondary/50 px-3 py-1.5 rounded-full border border-white/10">
+              Powered by AI
+            </p>
           </div>
-          <p className="hidden sm:block text-xs text-muted-foreground font-medium bg-secondary/50 px-3 py-1.5 rounded-full border border-white/10">
-            Powered by AI
-          </p>
         </div>
       </header>
 
