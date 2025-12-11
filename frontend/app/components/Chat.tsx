@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect, useRef } from 'react';
+import Image from 'next/image';
 
 interface Message {
   role: 'user' | 'assistant';
@@ -161,8 +162,15 @@ export default function Chat({ sessionId, onLeadCapture }: ChatProps) {
       <div className="flex-1 overflow-y-auto p-4 sm:p-6 space-y-6 scroll-smooth">
         {messages.length === 0 && (
           <div className="flex flex-col items-center justify-center h-full text-center p-8 opacity-0 animate-in fade-in slide-in-from-bottom-4 duration-700 fill-mode-forwards" style={{ animationDelay: '0.2s', animationFillMode: 'forwards' }}>
-            <div className="w-16 h-16 bg-primary/10 rounded-2xl flex items-center justify-center mb-6 text-primary">
-              <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m3 21 1.9-5.7a8.5 8.5 0 1 1 3.8 3.8z" /></svg>
+            <div className="flex items-center justify-center mb-6">
+              <Image
+                src="/logo.png"
+                alt="UAE Mortgage Assistant"
+                width={80}
+                height={80}
+                className="object-contain drop-shadow-xl"
+                priority
+              />
             </div>
             <h2 className="text-3xl font-bold mb-3 bg-clip-text text-transparent bg-gradient-to-r from-primary to-blue-600">
               UAE Mortgage Assistant
@@ -197,8 +205,8 @@ export default function Chat({ sessionId, onLeadCapture }: ChatProps) {
           >
             {/* Avatar */}
             <div className={`w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 mt-1 ${message.role === 'user'
-                ? 'bg-primary text-primary-foreground'
-                : 'bg-emerald-600 text-white shadow-sm'
+              ? 'bg-primary text-primary-foreground'
+              : 'bg-emerald-600 text-white shadow-sm'
               }`}>
               {message.role === 'user' ? (
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2" /><circle cx="12" cy="7" r="4" /></svg>
@@ -210,8 +218,8 @@ export default function Chat({ sessionId, onLeadCapture }: ChatProps) {
             {/* Message bubble */}
             <div
               className={`max-w-[85%] rounded-2xl px-5 py-3 shadow-sm ${message.role === 'user'
-                  ? 'bg-primary text-primary-foreground rounded-tr-sm'
-                  : 'bg-white dark:bg-slate-800 text-foreground border border-border/50 rounded-tl-sm'
+                ? 'bg-primary text-primary-foreground rounded-tr-sm'
+                : 'bg-white dark:bg-slate-800 text-foreground border border-border/50 rounded-tl-sm'
                 }`}
             >
               <div className={`text-[15px] ${message.role === 'assistant' ? 'leading-7' : 'leading-relaxed'

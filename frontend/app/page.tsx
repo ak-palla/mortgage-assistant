@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import Image from 'next/image';
 import Chat from './components/Chat';
 import LeadCapture from './components/LeadCapture';
 
@@ -57,9 +58,13 @@ export default function Home() {
       <header className="fixed top-0 left-0 right-0 z-20 glass-panel border-b border-white/20">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-primary to-blue-600 flex items-center justify-center text-white font-bold shadow-lg shadow-primary/20">
-              M
-            </div>
+            <Image
+              src="/logo.png"
+              alt="Logo"
+              width={40}
+              height={40}
+              className="w-10 h-10 object-contain drop-shadow-md"
+            />
             <div>
               <h1 className="text-lg font-bold text-foreground leading-tight">UAE Mortgage Assistant</h1>
             </div>
