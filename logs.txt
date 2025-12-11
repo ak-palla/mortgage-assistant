@@ -1,0 +1,14 @@
+(index):1 Access to fetch at 'https://mortgage-assistant-production.up.railway.app/chat/new' from origin 'https://mortgage-assistant.vercel.app' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource.
+mortgage-assistant-production.up.railway.app/chat/new:1  Failed to load resource: net::ERR_FAILED
+4f6e53a21a4ab1eb.js:1 Error creating session: TypeError: Failed to fetch
+    at 4f6e53a21a4ab1eb.js:1:7114
+    at 4f6e53a21a4ab1eb.js:1:7341
+    at op (1b3d0f6ed5167029.js:1:102167)
+    at ic (1b3d0f6ed5167029.js:1:126017)
+    at is (1b3d0f6ed5167029.js:1:125679)
+    at ic (1b3d0f6ed5167029.js:1:125997)
+    at is (1b3d0f6ed5167029.js:1:125679)
+    at ic (1b3d0f6ed5167029.js:1:126062)
+    at is (1b3d0f6ed5167029.js:1:125679)
+    at ic (1b3d0f6ed5167029.js:1:126062)
+(anonymous) @ 4f6e53a21a4ab1eb.js:1

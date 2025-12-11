@@ -116,14 +116,21 @@ app = FastAPI(
 )
 
 # CORS middleware for frontend
+# FastAPI doesn't support wildcards in allow_origins, so we need exact origins
+allowed_origins = [
+    "http://localhost:3000",
+    "http://localhost:3001",
+    "https://mortgage-assistant.vercel.app",  # Vercel frontend (production)
+]
+
+# Add additional origins from environment variable if set
+if os.getenv("ALLOWED_ORIGINS"):
+    additional_origins = os.getenv("ALLOWED_ORIGINS").split(",")
+    allowed_origins.extend([origin.strip() for origin in additional_origins])
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=[
-        "http://localhost:3000",
-        "http://localhost:3001",
-        "https://*.vercel.app",  # Vercel frontend
-        "https://*.railway.app",  # Railway domains (if needed)
-    ],
+    allow_origins=allowed_origins,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
