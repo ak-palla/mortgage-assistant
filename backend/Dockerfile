@@ -6,8 +6,8 @@ WORKDIR /app
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Copy application code
-COPY app/ /app/app/
+# Copy application code (copy entire app directory)
+COPY app ./app
 
 # Create leads.json file if it doesn't exist
 RUN touch /app/leads.json
