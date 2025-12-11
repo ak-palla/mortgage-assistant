@@ -142,15 +142,15 @@ for tool_call in message.tool_calls:
     is_valid, error_msg = validate_tool_arguments(tool_name, arguments)
     
     if is_valid:
-        # Execute the deterministic function (not LLM math!)
-        tool_result = execute_tool(tool_name, arguments)
-        
-        # Add result back to conversation for LLM to interpret
-        messages.append({
-            "role": "tool",
-            "tool_call_id": tool_call.id,
-            "content": json.dumps(tool_result)
-        })
+    # Execute the deterministic function (not LLM math!)
+    tool_result = execute_tool(tool_name, arguments)
+    
+    # Add result back to conversation for LLM to interpret
+    messages.append({
+        "role": "tool",
+        "tool_call_id": tool_call.id,
+        "content": json.dumps(tool_result)
+    })
     else:
         # Handle invalid tool calls gracefully
         messages.append({
