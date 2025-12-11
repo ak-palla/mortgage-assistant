@@ -36,31 +36,48 @@ export default function Home() {
 
   if (!isClient || !sessionId) {
     return (
-      <div className="flex items-center justify-center min-h-screen">
+      <div className="flex items-center justify-center min-h-screen bg-background">
         <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500 mx-auto"></div>
-          <p className="mt-4 text-gray-600">Initializing chat...</p>
+          <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-primary mx-auto"></div>
+          <p className="mt-4 text-muted-foreground font-medium">Initializing Mortgage Assistant...</p>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="flex flex-col h-screen bg-gray-50">
+    <div className="flex flex-col h-screen overflow-hidden relative selection:bg-accent selection:text-accent-foreground">
+      {/* Background decoration */}
+      <div className="fixed inset-0 pointer-events-none z-0">
+        <div className="absolute -top-20 -right-20 w-96 h-96 bg-primary/10 rounded-full blur-3xl opacity-50"></div>
+        <div className="absolute -bottom-20 -left-20 w-80 h-80 bg-blue-500/10 rounded-full blur-3xl opacity-50"></div>
+      </div>
+
       {/* Header */}
-      <header className="bg-white border-b shadow-sm">
-        <div className="max-w-4xl mx-auto px-4 py-4">
-          <h1 className="text-2xl font-bold text-gray-900">UAE Mortgage Assistant</h1>
-          <p className="text-sm text-gray-600">Your smart friend for property decisions</p>
+      <header className="fixed top-0 left-0 right-0 z-20 glass-panel border-b border-white/20">
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+          <div className="flex items-center gap-2">
+            <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-primary to-blue-600 flex items-center justify-center text-white font-bold shadow-lg shadow-primary/20">
+              M
+            </div>
+            <div>
+              <h1 className="text-lg font-bold text-foreground leading-tight">UAE Mortgage Assistant</h1>
+            </div>
+          </div>
+          <p className="hidden sm:block text-sm text-muted-foreground font-medium bg-secondary/50 px-3 py-1 rounded-full border border-white/10">
+            Powered by AI
+          </p>
         </div>
       </header>
 
       {/* Chat Area */}
-      <main className="flex-1 overflow-hidden max-w-4xl w-full mx-auto bg-white shadow-lg my-4 rounded-lg">
-        <Chat
-          sessionId={sessionId}
-          onLeadCapture={() => !leadSubmitted && setShowLeadCapture(true)}
-        />
+      <main className="flex-1 overflow-hidden w-full max-w-5xl mx-auto pt-20 pb-4 px-2 sm:px-4 z-10">
+        <div className="h-full w-full bg-white/80 dark:bg-slate-900/80 backdrop-blur-md rounded-2xl shadow-xl border border-white/20 overflow-hidden flex flex-col transition-all duration-300">
+          <Chat
+            sessionId={sessionId}
+            onLeadCapture={() => !leadSubmitted && setShowLeadCapture(true)}
+          />
+        </div>
       </main>
 
       {/* Lead Capture Modal */}
@@ -77,8 +94,13 @@ export default function Home() {
 
       {/* Success Message */}
       {leadSubmitted && (
-        <div className="fixed bottom-4 right-4 bg-green-500 text-white px-6 py-3 rounded-lg shadow-lg">
-          Thank you! We&apos;ll be in touch soon.
+        <div className="fixed bottom-8 right-8 z-50 animate-in slide-in-from-bottom-4 fade-in duration-300">
+          <div className="glass-panel text-primary-foreground bg-primary px-6 py-4 rounded-xl shadow-lg shadow-primary/20 flex items-center gap-3">
+            <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+            </svg>
+            <span className="font-medium">Details received! We&apos;ll be in touch soon.</span>
+          </div>
         </div>
       )}
     </div>

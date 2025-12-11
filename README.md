@@ -126,27 +126,65 @@ def calculate_emi(loan_amount: float, interest_rate: float, tenure_years: int) -
     }
 ```
 
-#### 3. Tool Execution Flow
+#### 3. Tool Validation & Execution Flow
+
+**Critical**: Before executing any tool, arguments are validated to prevent errors:
 
 ```python
 # backend/app/main.py
-# When Groq returns tool_calls, we execute them:
+# When Groq returns tool_calls, we validate and execute:
 
-for tool_call, tool_name, arguments in valid_tool_calls:
-    # Execute the deterministic function (not LLM math!)
-    tool_result = execute_tool(tool_name, arguments)
+for tool_call in message.tool_calls:
+    tool_name = tool_call.function.name
+    arguments = json.loads(tool_call.function.arguments)
     
-    # Add result back to conversation for LLM to interpret
-    messages.append({
-        "role": "tool",
-        "tool_call_id": tool_call.id,
-        "content": json.dumps(tool_result)
-    })
-
-# LLM then generates natural language response from tool results
+    # Validate arguments before execution
+    is_valid, error_msg = validate_tool_arguments(tool_name, arguments)
+    
+    if is_valid:
+        # Execute the deterministic function (not LLM math!)
+        tool_result = execute_tool(tool_name, arguments)
+        
+        # Add result back to conversation for LLM to interpret
+        messages.append({
+            "role": "tool",
+            "tool_call_id": tool_call.id,
+            "content": json.dumps(tool_result)
+        })
+    else:
+        # Handle invalid tool calls gracefully
+        messages.append({
+            "role": "tool",
+            "tool_call_id": tool_call.id,
+            "content": json.dumps({"error": error_msg, "skipped": True})
+        })
 ```
 
-**Result**: The LLM handles empathy and conversation, but ALL math is done by deterministic Python functions. Zero hallucinations.
+**Validation Examples**:
+- **EMI**: Loan amount > 0, tenure 1-25 years, interest rate ≥ 0
+- **LTV**: Property price > 0, down payment < property price
+- **Buy vs Rent**: All inputs must be positive, LTV must be valid
+
+#### 4. Type Conversion & Accuracy
+
+Groq sometimes returns numbers as strings. We convert them before calculation:
+
+```python
+# backend/app/main.py
+def convert_strings_to_numbers(data: dict) -> dict:
+    """Convert string numbers to actual numbers/integers."""
+    for key, value in data.items():
+        if isinstance(value, str):
+            try:
+                if '.' in value:
+                    converted[key] = float(value)
+                else:
+                    converted[key] = int(value)
+            except ValueError:
+                converted[key] = value  # Keep as string if conversion fails
+```
+
+**Result**: The LLM handles empathy and conversation, but ALL math is done by deterministic Python functions with proper validation. Zero hallucinations, zero calculation errors.
 
 ### Available Tools
 
@@ -154,6 +192,137 @@ for tool_call, tool_name, arguments in valid_tool_calls:
 2. **`check_ltv`**: Validates 80% LTV rule for UAE expats
 3. **`calculate_upfront_costs`**: Calculates 7% upfront costs (4% transfer + 2% agency + 1% misc)
 4. **`buy_vs_rent_analysis`**: Analyzes buy vs rent decision with heuristics
+
+---
+
+## 💾 State Management: Conversation Persistence
+
+**Critical Requirement**: The agent must remember context across multiple messages in a conversation. State management ensures continuity and allows the agent to build on previous interactions.
+
+### Architecture: In-Memory State with Session IDs
+
+The system uses a **session-based state management** approach:
+
+#### 1. Session Creation
+
+```python
+# backend/app/state.py
+class ConversationState:
+    def __init__(self):
+        self.conversations: Dict[str, Dict[str, Any]] = {}
+    
+    def create_session(self) -> str:
+        """Create a new conversation session with unique UUID."""
+        session_id = str(uuid.uuid4())
+        self.conversations[session_id] = {
+            "messages": [],
+            "created_at": datetime.now().isoformat(),
+            "user_data": {}
+        }
+        return session_id
+```
+
+**Flow**:
+1. Frontend calls `POST /chat/new` → Backend generates UUID session ID
+2. Session ID is returned to frontend and stored in React state
+3. All subsequent messages include this session ID
+
+#### 2. Message History Storage
+
+```python
+# backend/app/state.py
+def add_message(self, session_id: str, role: str, content: str) -> None:
+    """Add message to conversation history."""
+    self.conversations[session_id]["messages"].append({
+        "role": role,  # 'user' or 'assistant'
+        "content": content,
+        "timestamp": datetime.now().isoformat()
+    })
+
+def get_history(self, session_id: str) -> List[Dict[str, str]]:
+    """Retrieve full conversation history for context."""
+    return [
+        {"role": msg["role"], "content": msg["content"]}
+        for msg in self.conversations[session_id]["messages"]
+    ]
+```
+
+**How It Works**:
+- Each user message is stored immediately when received
+- Each assistant response is stored after generation
+- Full history is sent to LLM on every request for context
+- System prompt is prepended automatically if missing
+
+#### 3. State Flow in Chat Endpoint
+
+```python
+# backend/app/main.py
+async def stream_chat_response(session_id: str, user_message: str):
+    # 1. Add user message to state
+    conversation_state.add_message(session_id, "user", user_message)
+    
+    # 2. Retrieve full conversation history
+    messages = conversation_state.get_history(session_id)
+    
+    # 3. Add system prompt if needed
+    if not messages or messages[0].get("role") != "system":
+        messages = [{"role": "system", "content": SYSTEM_PROMPT}] + messages
+    
+    # 4. Send full history to LLM (with tool calls handled)
+    # ... LLM processing ...
+    
+    # 5. Save assistant response to state
+    conversation_state.add_message(session_id, "assistant", full_response)
+```
+
+#### 4. Tool Call State Management
+
+When the LLM makes tool calls, the state includes:
+- **Assistant message** with `tool_calls` array
+- **Tool result messages** with `tool_call_id` references
+- This allows multi-turn tool calling with context preservation
+
+```python
+# Tool call is added to history
+messages.append({
+    "role": "assistant",
+    "content": assistant_content,
+    "tool_calls": tool_calls_data
+})
+
+# Tool result is added with reference
+messages.append({
+    "role": "tool",
+    "tool_call_id": tool_call.id,
+    "content": json.dumps(tool_result)
+})
+```
+
+### Design Decisions
+
+**Why In-Memory?**
+- ✅ **Simplicity**: No database setup required for MVP
+- ✅ **Speed**: Instant access, no I/O overhead
+- ✅ **Stateless API**: Each request includes session_id (scalable horizontally)
+
+**Trade-offs**:
+- ⚠️ **Persistence**: State lost on server restart (acceptable for MVP)
+- ⚠️ **Scalability**: Single server only (can migrate to Redis/DB later)
+
+**Future Enhancements**:
+- Redis for distributed state
+- PostgreSQL for persistent conversation history
+- Session expiration (TTL) for cleanup
+
+### State Validation
+
+```python
+# backend/app/main.py
+if not conversation_state.session_exists(request.session_id):
+    raise HTTPException(status_code=404, detail="Session not found")
+```
+
+Every chat request validates session existence before processing.
 
 ---
 
