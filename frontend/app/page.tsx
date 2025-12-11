@@ -55,28 +55,28 @@ export default function Home() {
       </div>
 
       {/* Header */}
-      <header className="fixed top-0 left-0 right-0 z-20 glass-panel border-b border-white/20">
-        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
-          <div className="flex items-center gap-2">
+      <header className="fixed top-6 left-0 right-0 z-20 flex justify-center px-4">
+        <div className="glass-panel w-full max-w-4xl rounded-full border border-white/20 px-6 py-3 flex items-center justify-between shadow-2xl bg-white/60 dark:bg-slate-900/60 backdrop-blur-xl">
+          <div className="flex items-center gap-3">
             <Image
               src="/logo.png"
               alt="Logo"
-              width={40}
-              height={40}
-              className="w-10 h-10 object-contain drop-shadow-md"
+              width={32}
+              height={32}
+              className="w-8 h-8 object-contain drop-shadow-md"
             />
             <div>
-              <h1 className="text-lg font-bold text-foreground leading-tight">UAE Mortgage Assistant</h1>
+              <h1 className="text-base font-bold text-foreground leading-tight">UAE Mortgage Assistant</h1>
             </div>
           </div>
-          <p className="hidden sm:block text-sm text-muted-foreground font-medium bg-secondary/50 px-3 py-1 rounded-full border border-white/10">
+          <p className="hidden sm:block text-xs text-muted-foreground font-medium bg-secondary/50 px-3 py-1.5 rounded-full border border-white/10">
             Powered by AI
           </p>
         </div>
       </header>
 
       {/* Chat Area */}
-      <main className="flex-1 overflow-hidden w-full max-w-5xl mx-auto pt-20 pb-4 px-2 sm:px-4 z-10">
+      <main className="flex-1 overflow-hidden w-full max-w-5xl mx-auto pt-24 pb-4 px-2 sm:px-4 z-10">
         <div className="h-full w-full bg-white/80 dark:bg-slate-900/80 backdrop-blur-md rounded-2xl shadow-xl border border-white/20 overflow-hidden flex flex-col transition-all duration-300">
           <Chat
             sessionId={sessionId}
