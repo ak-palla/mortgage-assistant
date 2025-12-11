@@ -17,4 +17,5 @@ EXPOSE 8000
 
 # Run the application (use PORT env var, default to 8000 for local)
 # Railway sets PORT automatically, so we use it here
-CMD sh -c "uvicorn app.main:app --host 0.0.0.0 --port ${PORT:-8000}"
+# Use exec form to ensure PORT is properly expanded
+CMD ["sh", "-c", "uvicorn app.main:app --host 0.0.0.0 --port ${PORT:-8000}"]
