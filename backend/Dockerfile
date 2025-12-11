@@ -3,11 +3,11 @@ FROM python:3.11-slim
 WORKDIR /app
 
 # Copy requirements first for better caching
-COPY requirements.txt .
+COPY backend/requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Copy application code (copy entire app directory)
-COPY app ./app
+# Copy application code
+COPY backend/app ./app
 
 # Create leads.json file if it doesn't exist
 RUN touch /app/leads.json
