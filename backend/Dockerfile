@@ -9,6 +9,10 @@ RUN pip install --no-cache-dir -r requirements.txt
 # Copy application code
 COPY backend/app ./app
 
+# Copy entrypoint script
+COPY backend/entrypoint.sh /app/entrypoint.sh
+RUN chmod +x /app/entrypoint.sh
+
 # Create leads.json file if it doesn't exist
 RUN touch /app/leads.json
 
