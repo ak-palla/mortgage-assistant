@@ -277,35 +277,71 @@ export default function Chat({ sessionId, onLeadCapture }: ChatProps) {
       </div>
 
       {/* Templates Sidebar */}
-      <div className="w-[280px] border-l border-white/20 bg-white/40 dark:bg-slate-900/40 backdrop-blur-md p-4 hidden lg:flex flex-col gap-4">
-        <div className="flex items-center gap-2 mb-2">
-          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-muted-foreground"><rect width="18" height="18" x="3" y="3" rx="2" /><path d="M9 3v18" /><path d="m14 9 3 3-3 3" /></svg>
-          <h3 className="text-sm font-semibold text-muted-foreground">Quick Templates</h3>
+      <div className="w-[300px] border-l border-white/20 bg-white/40 dark:bg-slate-900/40 backdrop-blur-md hidden lg:flex flex-col h-full">
+        <div className="p-4 border-b border-white/10 flex items-center gap-2">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-primary"><rect width="18" height="18" x="3" y="3" rx="2" /><path d="M9 3v18" /><path d="m14 9 3 3-3 3" /></svg>
+          <h3 className="text-sm font-semibold text-foreground">Scenarios</h3>
         </div>
 
-        <button
-          onClick={() => setInput("Calculate EMI for 1.5M loan over 15 years at 4.5%")}
-          className="text-left p-4 rounded-xl bg-white dark:bg-slate-800 border border-white/20 shadow-sm hover:shadow-md hover:border-primary/50 transition-all duration-200 group relative overflow-hidden"
-        >
-          <div className="absolute top-0 right-0 p-2 opacity-0 group-hover:opacity-100 transition-opacity">
-            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-primary"><path d="M5 12h14" /><path d="m12 5 7 7-7 7" /></svg>
-          </div>
-          <p className="text-sm font-medium text-foreground group-hover:text-primary transition-colors pr-4">
-            Calculate EMI for 1.5M loan over 15 years at 4.5%
-          </p>
-        </button>
-
-        <button
-          onClick={() => setInput("What are the best areas for investment in Dubai right now?")}
-          className="text-left p-4 rounded-xl bg-white dark:bg-slate-800 border border-white/20 shadow-sm hover:shadow-md hover:border-primary/50 transition-all duration-200 group relative overflow-hidden"
-        >
-          <div className="absolute top-0 right-0 p-2 opacity-0 group-hover:opacity-100 transition-opacity">
-            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-primary"><path d="M5 12h14" /><path d="m12 5 7 7-7 7" /></svg>
-          </div>
-          <p className="text-sm font-medium text-foreground group-hover:text-primary transition-colors pr-4">
-            Best investment areas in Dubai
-          </p>
-        </button>
+        <div className="flex-1 overflow-y-auto p-4 space-y-3 custom-scrollbar">
+          {[
+            {
+              title: "Simple EMI Calculation",
+              text: "Calculate EMI for 1.5M loan over 15 years at 4.5%",
+              icon: <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" />
+            },
+            {
+              title: "LTV Validation",
+              text: "I want to buy a 1.8M apartment. I can put down 400k",
+              icon: <><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" /><path d="M22 4 12 14.01l-3-3" /></>
+            },
+            {
+              title: "Upfront Costs",
+              text: "Tell me about all the fees for a 3.5M property purchase",
+              icon: <><path d="M2 12h10" /><path d="M9 4v16" /><path d="m3 9 3 3-3 3" /><path d="M12 20h9" /><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z" /></>
+            },
+            {
+              title: "Buy vs Rent Analysis",
+              text: "Should I buy or rent? I make 25k per month, property is 2M, I have 500k down payment, current rent is 8k, and I plan to stay 7 years",
+              icon: <><path d="M3 21h18" /><path d="M5 21V7l8-4 8 4v14" /><path d="M17 21v-8.5a1.5 1.5 0 0 0-3 0V21" /></>
+            },
+            {
+              title: "Vague: Should I buy?",
+              text: "Should I buy a property?",
+              icon: <><circle cx="12" cy="12" r="10" /><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3" /><path d="M12 17h.01" /></>
+            },
+            {
+              title: "Vague: Income + Savings",
+              text: "I have 500k saved and make 25k per month",
+              icon: <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" />
+            },
+            {
+              title: "Full Journey Start",
+              text: "Hi, I'm thinking about buying property in Dubai",
+              icon: <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
+            }
+          ].map((template, i) => (
+            <button
+              key={i}
+              onClick={() => setInput(template.text)}
+              className="w-full text-left p-3 rounded-xl bg-white/50 dark:bg-slate-800/50 border border-white/20 shadow-sm hover:shadow-md hover:border-primary/50 hover:bg-white dark:hover:bg-slate-800 transition-all duration-200 group relative overflow-hidden"
+            >
+              <div className="flex items-start gap-3">
+                <div className="mt-1 p-1.5 rounded-lg bg-primary/10 text-primary group-hover:bg-primary group-hover:text-white transition-colors duration-200">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    {template.icon}
+                  </svg>
+                </div>
+                <div>
+                  <h4 className="text-xs font-semibold text-foreground/80 group-hover:text-primary mb-1 transition-colors">{template.title}</h4>
+                  <p className="text-xs text-muted-foreground line-clamp-2 leading-relaxed">
+                    {template.text}
+                  </p>
+                </div>
+              </div>
+            </button>
+          ))}
+        </div>
       </div>
     </div>
   );
