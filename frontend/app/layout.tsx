@@ -13,7 +13,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "UAE Mortgage Assistant",
+  title: "AskRivo",
   description: "AI-powered conversational mortgage advisor for UAE expats",
 };
 

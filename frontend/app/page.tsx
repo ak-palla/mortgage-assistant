@@ -40,7 +40,7 @@ export default function Home() {
       <div className="flex items-center justify-center min-h-screen bg-background">
         <div className="text-center">
           <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-primary mx-auto"></div>
-          <p className="mt-4 text-muted-foreground font-medium">Initializing Mortgage Assistant...</p>
+          <p className="mt-4 text-muted-foreground font-medium">Initializing AskRivo...</p>
         </div>
       </div>
     );
@@ -67,7 +67,7 @@ export default function Home() {
                 className="w-8 h-8 object-contain drop-shadow-md"
               />
               <div>
-                <h1 className="text-base font-bold text-foreground leading-tight">UAE Mortgage Assistant</h1>
+                <h1 className="text-base font-bold text-foreground leading-tight">AskRivo</h1>
               </div>
             </div>
             <p className="hidden sm:block text-xs text-muted-foreground font-medium bg-secondary/50 px-3 py-1.5 rounded-full border border-white/10">

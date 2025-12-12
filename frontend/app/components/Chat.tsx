@@ -166,7 +166,7 @@ export default function Chat({ sessionId, onLeadCapture }: ChatProps) {
               <div className="flex items-center justify-center mb-6">
                 <Image
                   src="/logo.png"
-                  alt="UAE Mortgage Assistant"
+                  alt="AskRivo"
                   width={80}
                   height={80}
                   className="object-contain drop-shadow-xl"
@@ -174,7 +174,7 @@ export default function Chat({ sessionId, onLeadCapture }: ChatProps) {
                 />
               </div>
               <h2 className="text-3xl font-bold mb-3 bg-clip-text text-transparent bg-gradient-to-r from-primary to-blue-600">
-                UAE Mortgage Assistant
+                AskRivo
               </h2>
               <p className="text-muted-foreground max-w-md text-lg mb-8">
                 Your AI partner for smarter property decisions in the UAE.
